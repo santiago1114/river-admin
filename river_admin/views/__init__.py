@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import re_path
 from django.db import IntegrityError
 from django.db.models import ProtectedError
 from rest_framework import serializers
@@ -17,7 +17,7 @@ def _path(path, method, **options):
         authentications = options.get("authentication_classes", [TokenAuthentication])
         renderers = options.get("renderer_classes", [JSONRenderer])
         new_view = api_view([method])(authentication_classes(authentications)(renderer_classes(renderers)(view)))
-        urls.append(url(path, new_view))
+        urls.append(re_path(path, new_view))
         return new_view
 
     return decorator
